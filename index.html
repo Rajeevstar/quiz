@@ -1,0 +1,251 @@
+
+<!--
+
+
+🌹 CSS Quizz
+ 
+🌹 Any suguestion is most welcome
+ 
+🌹 Don't copy without my permission
+   
+🌹 Do like & comment ur score
+ 
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS Quizzz</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"> 
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+<!--loader-->
+    <div class="loader">
+        <p>Loading...</p>
+    </div
+<!--quiz page-->  
+    <div class="quiz_cont">
+        <div class="h1">
+        </div>      
+<!--proggess bar-->            
+         <div class="progess_bar">
+        <div class="progress"></div>
+      </div>
+    </di>
+<!--challengers profile-->               
+        <div class="challengers">           
+      <img class="profile" src="https://www.internetandtechnologylaw.com/files/2019/06/iStock-872962368-chat-bots-265x300.jpg" id="me" height="100px" width="100px">
+<!--display scores-->
+            <div class="name">0:0</div>
+<!--challengers profile-->     
+     <img class="profile" src="https://api.sololearn.com/uploads/avatars/1.jpg" id="you" height="100px" widh="100px">
+        </div>
+<!--question-->
+        <div class="ques"></div> 
+        <div class="cont">
+<!--options-->
+        <div class="option">        
+    <input type="radio" id="op1" class="opt" name="op">
+        <label for="op1"></label><hr>
+        <input type="radio" class="opt" id="op2" name="op">
+        <label for="op2"></label><hr>
+        <input type="radio" class="opt" id="op3" name="op">
+        <label for="op3"></label><hr>
+        <input type="radio" class="opt" id="op4" name="op">
+        <label for="op4"></label>
+        </div>
+        </div>
+<!--submit answer-->
+        <footer class="f1">
+        <button class="btn1">SUBMIT ANSWER</button>
+        </footer>
+    </div>
+<!--sound-->    
+<audio src="https://raw.githubusercontent.com/EdwardDunn/Platform-Game/master/Audio/win_sound.wav" id="win"></audio>
+<audio src="https://raw.githubusercontent.com/EdwardDunn/Platform-Game/master/Audio/gameover.wav" id="lose"></audio>
+<audio src="https://saantonandre.github.io/sfx/player_damaged.wav" id="draw"></audio>
+<!--result page-->
+    <div class="result_page">
+           <div class="players">
+             <div class="player">
+               <img src="https://www.internetandtechnologylaw.com/files/2019/06/iStock-872962368-chat-bots-265x300.jpg" id="m"/>
+                 </div>
+               <div class="vs"><p>v/S</p></div>
+               <div class="player">
+                   <img  src="https://api.sololearn.com/uploads/avatars/1.jpg" id="you"/>
+               </div>
+           </div>
+            <div class="result">You Lose</div>
+           <h2 class="result_score">2:0</h2>
+               <footer class="f2">
+        <button onclick="restart()" class="rematch">REMATCH</button>
+        </footer>
+       </div>
+       <script>
+        
+// Enter ur user_id 
+let user_id = prompt("Enter Your User Id:",6241792);
+
+//JSON
+const ques=[
+{que:"Which of these Elements are all <table> Elements",
+option:["<table><tr><td>","<table><tr><tt>","<table><foot><head>","<table><tb><tt>"],
+crt:"<table><tr><td>",
+},
+{que:"How do you define a custom property in css?",
+option:["$custom-property = 10","$custom-property : 10","--custom-property : 10","--custom-property = 10"],
+crt:"--custom-property : 10"},
+{que:"In CSS, what is the order of the box model from the inside out",
+option:["Content, Margin, Border, Padding","Padding, Margin, Border, Content","Content, Padding, Border, Margin","Border, Padding, Margin, Content"],
+crt:"Content, Padding, Border, Margin"},
+{que:"How do you check grid support in css",
+option:["@supports(grid)","@supports(display:grid)","@feature(display:grid)","@feature(grid)"],
+crt:"@supports(display:grid)"}, 
+{que:"Which of the following is not a valid CSS property",
+option:["text-wrap","will-change","empty-cells","border-image"],
+crt:"text-wrap"}
+];
+
+//variables
+let ans = "";
+let index = 0;
+let score = 0;
+let s = 0;
+let time = 40;
+let game_over= true;
+
+window.onload = ()=>{
+
+var img = document.getElementById("me");
+var img1= document.getElementById("m");
+img.src=`https://api.sololearn.com/uploads/avatars/${user_id}.jpg`;
+img1.src=`https://api.sololearn.com/uploads/avatars/${user_id}.jpg`;
+img.onload=()=>{
+document.getElementsByClassName("loader")[0].remove();
+game_over = false;    
+}
+img.onerror=()=>{
+img.src=`https://www.internetandtechnologylaw.com/files/2019/06/iStock-872962368-chat-bots-265x300.jpg`; 
+img1.src=`https://www.internetandtechnologylaw.com/files/2019/06/iStock-872962368-chat-bots-265x300.jpg`;    
+}
+
+shuffle(ques);
+
+//ques load
+loadQues(index);
+
+//timer function 
+setInterval(timer,500);
+
+//submit ans
+document.getElementsByClassName("btn1")[0].onclick=()=>{
+
+//checked
+const options = document.getElementsByClassName("opt");
+const text = document.getElementsByTagName("label");
+
+//loop
+for(let i =0;i<options.length;i++) {
+
+ if(options[i].checked) {
+ 
+     ans = text[i].innerText;
+         
+     if(index!==ques.length-1) {   
+    
+if(ques[index].crt == ans){
+
+    loadQues(++index);
+  
+//s+=Math.floor(Math.random()*2) 
+  document.getElementsByClassName("name")[0].innerText=`${++score}:${s+=Math.floor(Math.random()*2)}`;                 
+     }else{
+
+       loadQues(++index);
+      document.getElementsByClassName("name")[0].innerText=`${score}:${s+=Math.floor(Math.random()*2)}`;  
+     } 
+     }else{  
+     
+//myanswwr==correctnAnswer?++score:score;  
+     document.getElementsByClassName("name")[0].innerText=`${(ques[index].crt == ans)?++score:score}:${s+=Math.floor(Math.random()*2)}`;
+       
+//gameover
+        gameOver();
+         
+     }
+              
+  }       
+} 
+
+};
+
+}
+const loadQues=(index)=>{
+time = 40;
+ let text = document.getElementsByTagName("label");
+ let options = document.getElementsByClassName("opt");
+ document.getElementsByClassName("ques")[0].innerText=`${ques[index].que}`;
+
+shuffle(ques[index].option);
+
+for(let i = 0;i<text.length;i++){
+    text[i].innerText = ques[index].option[i];
+    options[i].checked = false;
+} 
+}
+
+const timer=()=>{
+if(!game_over){
+ time--;
+ document.getElementsByClassName("progress")[0].style.width= (time/40)*100+"%";
+ if(time<0){
+     time = 40;
+     loadQues(++index);
+ }
+}
+}
+const gameOver=()=>{
+game_over = true;
+    ; 
+       document.getElementsByClassName("result_page")[0].style.display = "block";
+ 
+document.getElementsByClassName("result")[0].innerText=((s==score)?"Draw":s>score?"You Lose":"You Won");    document.getElementsByClassName("result_score")[0].innerText = `${score}:${s}`; 
+   
+    try{
+    (s==score)?(draw.play()):s>score?(lose.play()):(win.play());
+
+    }catch(err){}       
+}
+const restart = () =>{
+game_over = false;
+time = 40;
+score = 0;
+s = 0;
+ans = "";
+index = 0; 
+document.getElementsByClassName("name")[0].innerText=`${score}:${s}`;      document.getElementsByClassName("result_page")[0].style.display = "none";  
+loadQues(index);         
+};
+const shuffle = (array) =>{
+
+  var currentIndex = array.length, temporaryValue, randomIndex;
+  
+  while (0 !== currentIndex) {
+ 
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    
+    currentIndex --;    
+    
+    temporaryValue = array[currentIndex];
+    //console.log(temporaryValue);
+    array[currentIndex] = array[randomIndex];
+    //console.log(array[currentIndex]);
+    array[randomIndex] = temporaryValue;
+    //console.log(array[randomIndex]);
+  }
+  return array;
+}
+       </script> 
+    </body>
+</html>
